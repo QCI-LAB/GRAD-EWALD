@@ -1,25 +1,16 @@
-**EWALD** is an open-source software that implements 3 optical diffraction tomography reconstruction algorithms, all based on Fourier Diffraction Theorem (FDT): (1) DI (Direct Inversion), GP (Gerchberg-Papoulis algorithm) and GPSC (Gerchberg-Papoulis with total-variation-based object-support constraint). It is dedicated for investigation of biological and technical samples, like cells, bacterias, optical fibers etc.
+**GRAD-EWALD – Optical Diffraction Tomography with Gradient Data Support** 
 
-EWALD is a flexible software that allows:
-- reconstruction of data in **transmission** and **reflection** mode, or both
-- reconstruction of data captured with **single** or **multiple wavelengths**
-- reconstruction of data captured in **"limited angle" configuration** (angular scanning of the laser beam with stationary sample and camera)
-- reconstruction of data captured with stationary laser beam and a camera, **with rotating sample**
+GRAD-EWALD is a fork of EWALD [https://github.com/biopto/EWALD], an open-source software for optical diffraction tomography (ODT) reconstruction. This version introduces support for gradient-based data (shearing holography/DIC data) enabling gradient optical diffraction tomography (GODT).
 
-Example of tomographic reconstructions can be found [here](https://biophase.pl/ewald/).
+GRAD-EWALD has been tested with **transmission**, **single wavelengths**, **"limited angle" configuration** (angular scanning of the laser beam with stationary sample and camera) and **direct inversion (DI)** solver.
+
 
 ### Installation
 
-Currently, only the Matlab version of the software is available. To get the code running:
 1. Download the repository
-2. Download an example measurement dataset: [Sinogram_03_hacat_03.mat](https://gofile.me/57tEO/NnMXyJmcA).
-3. Run the RecGTVIC.m file in Matlab.
+2. Download an example measurement dataset: [Sinogram_GODT.mat](https://zenodo.org/records/15356313).
+3. Run the GODT.m file in Matlab.
 
-If you want to use the GPSC algorithm with advanced total-variation minimization you need to make these 2 additional steps before running RecGTVIC.m:
-1. Download ASTRA Tomography Toolbox [astra-toolbox/astra-toolbox: ASTRA Tomography Toolbox (github.com)](https://github.com/astra-toolbox/astra-toolbox) and add it to Matlab path.
-2. Download linear-operator toolbox Spot [mpf/spot: A linear-operator toolbox for Matlab (github.com)](https://github.com/mpf/spot) and add it to Matlab path.
-
-Note, that you need to have CUDA on your computer to run GPSC!
 
 ### Licensing
 
@@ -41,6 +32,13 @@ The code is shared under GPLv3 license. If you use this code, please cite one of
 
 [4] W. Krauze, P. Ossowski, M. Nowakowski, M. Szkulmowski, M. Kujawińska "Enhanced QPI functionality by combining OCT and ODT methods," Proc. SPIE 11653, 19-24 (2021).
 
+- for gradient-based measurements using this fork of the code, please cite:
+
+[5] J. Winnik, P. Zdankowski, M. Stefaniuk, A. Ahmad, C. Zuo, B. S. Ahluwalia, M. Trusiak "Gradient Optical Diffraction Tomography," arXiv preprint arXiv:2411.08423 (2024).
+
+
+**GRAD-EWALD is a fork of the EWALD-repository [https://github.com/biopto/EWALD], originally developed by:**
+
 **Main contributors:**
 - Piotr L. Makowski (2014-2018)
 - Paweł Ossowski (2020-2022)
@@ -50,7 +48,6 @@ The code is shared under GPLv3 license. If you use this code, please cite one of
 - Michał Ziemczonok 
 - Piotr Stępień.
 
-### Dependencies
-ASTRA Tomography Toolbox [astra-toolbox/astra-toolbox: ASTRA Tomography Toolbox (github.com)](https://github.com/astra-toolbox/astra-toolbox)
+**Gradient support was added by**
+- Juliana Winnik
 
-pyl1 [3cHeLoN/pyl1 (github.com)](https://github.com/3cHeLoN/pyl1)
