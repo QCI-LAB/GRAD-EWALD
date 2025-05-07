@@ -1,15 +1,16 @@
-**GRAD-EWALD – Optical Diffraction Tomography with Gradient Data Support** 
+**Optical Diffraction Tomography with Gradient Data Support** 
 
-GRAD-EWALD is a fork of EWALD [https://github.com/biopto/EWALD], an open-source software for optical diffraction tomography (ODT) reconstruction. This version introduces support for gradient-based data (shearing holography/DIC data) enabling gradient optical diffraction tomography (GODT).
+GRAD-EWALD is a fork of EWALD [https://github.com/biopto/EWALD], an open-source software for Optical Diffraction Tomography (ODT) reconstruction. This version introduces support for gradient-based data (shearing holography/DIC), enabling tomographic reconstruction of the refractive index derivative in the shearing direction.
+The theoretical foundation of Gradient Optical Diffraction Tomography (GODT) are provided in *J. Winnik, P. Zdankowski, M. Stefaniuk, A. Ahmad, C. Zuo, B. S. Ahluwalia, M. Trusiak "Gradient Optical Diffraction Tomography," arXiv preprint arXiv:2411.08423 (2024)* [https://arxiv.org/abs/2411.08423].
 
 GRAD-EWALD has been tested with **transmission**, **single wavelengths**, **"limited angle" configuration** (angular scanning of the laser beam with stationary sample and camera) and **direct inversion (DI)** solver.
-
+ 
 
 ### Installation
 
 1. Download the repository
 2. Download an example measurement dataset: [Sinogram_GODT.mat](https://zenodo.org/records/15356313).
-3. Run the GODT.m file in Matlab.
+3. Run the GODT.m file in Matlab
 
 
 ### Licensing
@@ -46,7 +47,7 @@ The code is shared under GPLv3 license. If you use this code, please cite one of
 
 **Other contributors:** 
 - Michał Ziemczonok 
-- Piotr Stępień.
+- Piotr Stępień
 
 **Gradient support was added by**
 - Juliana Winnik
