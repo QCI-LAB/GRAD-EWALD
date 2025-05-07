@@ -54,7 +54,7 @@ else
 end
 
 %default solver params
-Approx = 'Rytov';% Born,Rytov,PhaseRay(non-diffractive) % weak scattering approximation
+%Approx = 'Rytov';% Born,Rytov,PhaseRay(non-diffractive) % weak scattering approximation
 Ramp = false;%0 % Ram-Lak filter on/off (FAT, nGPi==0)
 
 % First, upsample Kspace in 'z' direction to guarantee precise positioning of projections on Ewald spheres
