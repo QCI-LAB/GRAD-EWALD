@@ -7,6 +7,7 @@
 function [RECON,dxo_xy,dxo_z, nGPi, N_Kspace_xy, KO,KOi, RMAEtab,RRMSEtab,RMADtab,RRMSDtab] = ...
 			FDT(SINOamp,SINOph, sino_params, thetay, ... % sinogram
 						n_imm,dx_projection, ... % optical system
+						shear, ...% transverse shear
 						geometry,Approx,interpFp,Ramp,do_NNC, ... % solver approximations
 						projection_padding_xy, Kspace_padding, N_projection, Kspace_oversampling_z, ROI_crop_z, limit_resolution_z,... % Fourier space sampling 
 						nGPi,epsi,relaxGP,relaxM, ... % Gerchberg-Papoulis iterations
@@ -31,6 +32,7 @@ function [RECON,dxo_xy,dxo_z, nGPi, N_Kspace_xy, KO,KOi, RMAEtab,RRMSEtab,RMADta
 %                                ~isempty(thetay) overrides sino_params(1,:) and sino_params(2,:)
 % n_imm                        - refractive index of object immersion medium
 % dx_projection                - projection sample size (CCD_pixel*sino_downsampling/system_magnification)
+% shear			       - total transverse shear in um
 % projection_padding_xy		   - K space oversampling factor defining reconstruction space padding
 % Kspace_padding               - parameter describing how the Kspace will be padded:
 %                                "optimal" - the Kspace is padded optimally to hold all information 
@@ -40,7 +42,7 @@ function [RECON,dxo_xy,dxo_z, nGPi, N_Kspace_xy, KO,KOi, RMAEtab,RRMSEtab,RMADta
 % geometry                     - capture system configuration (detector orientation):
 %                                'facing' = rotating object  (kxp,kyp or thetay: detector plane follows projection wavefront)
 %                                'fixed' = rotating illumination (kxp,kyp: detector plane fixed in XY)
-% Approx                       - {'Born'|'Rytov'} weak scattering approximation
+% Approx                       - {'Born'|'Rytov'|'GradRytov'} weak scattering approximation
 % Ramp                         - ~isempty(thetay): use Ram-Lak filter on every projection (along X dimension)
 %				                 instead of averaging repeated voxels to mimic FBP or FBPR;
 %				                 isempty(thetay): use 2D ramp filter optimized for conical illumination scenario
@@ -284,6 +286,9 @@ for j=1:nproj  % main loop for K-space generation
             Up = single(amp.*exp(1i*ph)-1);
         case 'Rytov'
             Up = single(log(amp)+1i*ph);     % log(amp * exp(1i*ph)) = log(amp)+1i*ph
+		case 'GradRytov'
+			% it is assumed that amp is in fact (amplitude-shifted_amplitude) / amplitude
+            Up = single(amp + 1i*ph);
         otherwise
             error('Wrong option `Approx`.');
     end
@@ -552,8 +557,16 @@ else
        
     n_rec = ifftn(ifftshift(KO))./(dxo_xy^2*dxo_z);
 	if ~objshift; n_rec = fftshift(n_rec,3); end% remove z-shift
-    % Born, Rytov
-    n_rec = n_imm*sqrt(1-n_rec/(2*pi*mean(kn))^2); % o(x,y,z) -> n(x,y,z)
+    
+    % Handle different approximation modes
+    if strcmp(Approx, 'Born') || strcmp(Approx, 'Rytov')
+        n_rec = n_imm*sqrt(1-n_rec/(2*pi*mean(kn))^2); % o(x,y,z) -> n(x,y,z)
+    
+    elseif strcmp(Approx, 'GradRytov')
+        n_rec = -0.5*n_imm*n_rec/(2*pi*mean(kn))^2/shear; % o(x,y,z) -> n(x,y,z)
+    end
+	
+	
 end
 
 % show fully filled K-space, Direct Inversion result and object support (if applies)
