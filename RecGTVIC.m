@@ -61,6 +61,7 @@ defaults;
 [RECON, dx, dz, nGPi, N_Kspace_xy_padded, KO,KOi, RMAEtab,RRMSEtab,RMADtab,RRMSDtab] = ...
 	FDT(SINOamp_reduced,SINOph_reduced, sino_params, thetay, ... % sinogram (including index of OCT proj)
 		n_imm,dx, ... % optical system (ODT and OCT)
+        shear, ...
 		geometry,Approx,interpFp,Ramp,do_NNC, ... % solver approximations
 		projection_padding_xy, Kspace_padding, N_projection_padded, Kspace_oversampling_z, ROI_crop_z, limit_resolution_z, ... % Fourier space sampling
 		nGPi,epsi,relaxGP,relaxM, ... % Gerchberg-Papoulis iterationsnGPi
