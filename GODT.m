@@ -101,26 +101,3 @@ end
 if contains(plots,'1'); vis(real(RECON), [min(real(RECON(:))), max(real(RECON(:)))]); colormap jet; end
 if contains(plots,'5'); Plots; end
 
-%% display
-
-rec_size=size(RECON);
-x=(-rec_size(1)/2+1:rec_size(1)/2)*dx;
-dz = dx/limit_resolution_z;
-z=(-rec_size(3)/2+1:rec_size(3)/2)*dz;
-
-vidfile = VideoWriter(['video.mp4'],'MPEG-4');
-vidfile.FrameRate = 3;
-open(vidfile);
-f=figure;
-% f.Units = 'normalized';
-% f.OuterPosition = [0,0.05,1,0.95];
-ri_range=[min(real(RECON(:))),max(real(RECON(:)))]/4;
-m=50;
-for i_z = rec_size(3)/2+1-m:rec_size(3)/2+m
-    imagesc(x,x,squeeze(real(RECON(:,:,i_z))),ri_range);colorbar
-    title(sprintf('real z = %2.2f um',z(i_z)));colorbar;axis image;
-    xlabel('x [um]');ylabel('y [um]');
-    F(i_z) = getframe(gcf); 
-    writeVideo(vidfile,F(i_z));
-end
-close(vidfile)
