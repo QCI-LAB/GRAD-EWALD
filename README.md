@@ -1,7 +1,7 @@
 **Optical Diffraction Tomography with Gradient Data Support** 
 
-GRAD-EWALD is a fork of EWALD [https://github.com/biopto/EWALD], an open-source software for Optical Diffraction Tomography (ODT) reconstruction. This version introduces support for gradient-based data (shearing holography/DIC), enabling tomographic reconstruction of the refractive index derivative in the shearing direction.
-The theoretical foundation of Gradient Optical Diffraction Tomography (GODT) are provided in *J. Winnik, P. Zdankowski, M. Stefaniuk, A. Ahmad, C. Zuo, B. S. Ahluwalia, M. Trusiak "Gradient Optical Diffraction Tomography," arXiv preprint arXiv:2411.08423 (2024)* [https://arxiv.org/abs/2411.08423].
+GRAD-EWALD is a fork of [EWALD](https://github.com/biopto/EWALD), an open-source software for Optical Diffraction Tomography (ODT) reconstruction. This version introduces support for gradient-based data (shearing holography/DIC), enabling tomographic reconstruction of the refractive index derivative in the shearing direction.
+The theoretical foundation of Gradient Optical Diffraction Tomography (GODT) are provided in [*J. Winnik, P. Zdankowski, M. Stefaniuk, A. Ahmad, C. Zuo, B. S. Ahluwalia, M. Trusiak "Gradient Optical Diffraction Tomography," arXiv preprint arXiv:2411.08423 (2024)*](https://arxiv.org/abs/2411.08423).
 
 GRAD-EWALD has been tested with **transmission**, **single wavelengths**, **"limited angle" configuration** (angular scanning of the laser beam with stationary sample and camera) and **direct inversion (DI)** solver.
  
@@ -38,7 +38,7 @@ The code is shared under GPLv3 license. If you use this code, please cite one of
 [5] J. Winnik, P. Zdankowski, M. Stefaniuk, A. Ahmad, C. Zuo, B. S. Ahluwalia, M. Trusiak "Gradient Optical Diffraction Tomography," arXiv preprint arXiv:2411.08423 (2024).
 
 
-**GRAD-EWALD is a fork of the EWALD-repository [https://github.com/biopto/EWALD], originally developed by:**
+**GRAD-EWALD is a fork of the [EWALD-repository](https://github.com/biopto/EWALD), originally developed by:**
 
 **Main contributors:**
 - Piotr L. Makowski (2014-2018)
@@ -49,6 +49,6 @@ The code is shared under GPLv3 license. If you use this code, please cite one of
 - Michał Ziemczonok 
 - Piotr Stępień
 
-**Gradient support was added by**
+**Gradient support was added by:**
 - Juliana Winnik
 
