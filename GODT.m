@@ -16,15 +16,14 @@ DI; ... % direct inversion (no iterations)
 %% Optimization parameters
 % After filling all projections: there is no useful information in 'z' far from center, so we can crop it by downsampling Kspace before IFT - must be power of 2
 ROI_crop_z = 2; % 1 / 2 / 4 (1 - no crop)
-% Resolution in 'z' is 4x worse then 'xy' so before IFT, Kspace can be cropped in 'z' to 0.25 of its original size
+% Resolution in 'z' is 2x worse then 'xy' so before IFT, Kspace can be cropped in 'z' to 0.5 of its original size
 limit_resolution_z = 0.5; % 0.25 / 0.5 / 1 (1 - no crop)
 sinogram_subset_factor = 1;     % default = 1     % take every Nth projection from sinogram
 projection_crop_factor = 1;     % default = 1;    % crop factor (<=1)
 resample_projections   = false; % default = false % resample projections to minimal safe resolution
 
 %% Save reconstruction?
-save_reconstruction    = 1;     % 0 - don't save; 1 - save RI; 2 - save RI and absorption (complex RI)
-% TODO: it should be 1 in final version
+save_reconstruction    = 0;     % 0 - don't save; 1 - save RI; 2 - save RI and absorption (complex RI)
 
 %% Plots
 % show selected plots:
@@ -40,7 +39,6 @@ save_reconstruction    = 1;     % 0 - don't save; 1 - save RI; 2 - save RI and a
 %                  - show the process of filling K-space with projections
 %                  - show the process of filling K-space with projections- also show spectrum of projection with dimmed out frequencies aroud NA
 plots = '1';
-%JW TODO; it shold be 1 in final version
 %%%%%%%%% END OF PARAMETER SECTION
 
 %% Load sinogram and system basic parameters
@@ -59,7 +57,7 @@ else
 end
 
 % Check for shear variable
-if ~exist('shear', 'var')
+if ~exist('shear', 'var') || isnan(shear)
     shear = 1;
     warning('Variable "shear" not found. Setting shear = 1. The result will not be quantitative.');
 end
@@ -80,18 +78,18 @@ end
                 projection_padding_xy, plots, do_NNC);
 
 %% Calculating reconstruction   
-[RECON, dx, dz, nGPi, N_Kspace_xy_padded, KO,KOi, RMAEtab,RRMSEtab,RMADtab,RRMSDtab] = ...
-	FDT(SINOamp_reduced,SINOph_reduced, sino_params, thetay, ... % sinogram (including index of OCT proj)
-		n_imm,dx, ... % optical system (ODT and OCT)
+[RECON, dx, dz, nGPi, N_Kspace_xy_padded, KO, KOi, RMAEtab, RRMSEtab, RMADtab, RRMSDtab] = ...
+	FDT(SINOamp_reduced, SINOph_reduced, sino_params, thetay, ... % sinogram (including index of OCT proj)
+		n_imm, dx, ... % optical system (ODT and OCT)
         shear, ... % shear value
-		geometry,Approx,interpFp,Ramp,do_NNC, ... % solver approximations
+		geometry, Approx, interpFp, Ramp, do_NNC, ... % solver approximations
 		projection_padding_xy, Kspace_padding, N_projection_padded, Kspace_oversampling_z, ROI_crop_z, limit_resolution_z, ... % Fourier space sampling
-		nGPi,epsi,relaxGP,relaxM, ... % Gerchberg-Papoulis iterationsnGPi
+		nGPi, epsi, relaxGP, relaxM, ... % Gerchberg-Papoulis iterationsnGPi
 		x_tv, n_obj_res, ... % Gerchberg-Papoulis object constraints/reference
 		plots, Fpmask);
 
 %% Display and save
-time=toc;
+time = toc;
 sim_time = show_time(time);
 
 if save_reconstruction
@@ -100,4 +98,6 @@ end
 
 if contains(plots,'1'); vis(real(RECON), [min(real(RECON(:))), max(real(RECON(:)))]); colormap jet; end
 if contains(plots,'5'); Plots; end
+
+sliceViewer(real(RECON), 'DisplayRange',  [min(real(RECON(:)))/4 max(real(RECON(:)))/4]);
 

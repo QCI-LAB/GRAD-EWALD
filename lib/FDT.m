@@ -32,7 +32,7 @@ function [RECON,dxo_xy,dxo_z, nGPi, N_Kspace_xy, KO,KOi, RMAEtab,RRMSEtab,RMADta
 %                                ~isempty(thetay) overrides sino_params(1,:) and sino_params(2,:)
 % n_imm                        - refractive index of object immersion medium
 % dx_projection                - projection sample size (CCD_pixel*sino_downsampling/system_magnification)
-% shear			       - total transverse shear in um
+% shear			               - total transverse shear in um
 % projection_padding_xy		   - K space oversampling factor defining reconstruction space padding
 % Kspace_padding               - parameter describing how the Kspace will be padded:
 %                                "optimal" - the Kspace is padded optimally to hold all information 
